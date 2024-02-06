@@ -6,4 +6,6 @@
     $: ({ supabase, session, profile } = data);
 </script>
 
-<AuthCard {supabase} />
+{#if !session}
+    <AuthCard {supabase} />
+{/if}
