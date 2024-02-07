@@ -1,4 +1,6 @@
 <script>
+    import { dev } from "$app/environment";
+
     import Fa from "svelte-fa";
     import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
@@ -8,6 +10,10 @@
 
     export let supabase;
 
+    const OAUTH_REDIRECT_URL = dev
+        ? "http://localhost:5173/"
+        : "https://beta.smeast.org/";
+
     async function signUpWithGoogle() {
         await supabase.auth.signInWithOAuth({
             provider: "google",
@@ -16,6 +22,7 @@
                     access_type: "offline",
                     prompt: "consent",
                 },
+                redirectTo: OAUTH_REDIRECT_URL,
             },
         });
     }

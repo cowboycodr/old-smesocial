@@ -26,24 +26,44 @@
 {/if}
 
 <div class="flex justify-center">
-    <div class="flex container max-w-[750px] space-x-2">
-        <div class="pt-3">
-            {#if !session}
-                <AuthCard {supabase} />
-            {:else}
-                <Button
-                    primary
-                    class="rounded-full"
-
-                    on:click={() => {
-                        showPostModal = true;
-                    }}
-                >
-                    <Plus size={18} />
-                </Button>
-            {/if}
+    <div class="grid col-span-5 container max-w-[1120px]">
+        <div class="flex space-x-2">
+            <div class="flex justify-end col-span-1 w-full max-w-[300px]">
+                <div class="w-min">
+                    <div class="pt-3">
+                        {#if session}
+                            <Button
+                                primary
+                                class="rounded-full"
+                                on:click={() => {
+                                    showPostModal = true;
+                                }}
+                            >
+                                <Plus size={18} />
+                            </Button>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-3 w-full">
+                <Feed {feed} {profile} />
+            </div>
+            <div class="w-full pt-1 col-span-1 max-w-[300px]">
+                {#if session}
+                    <Card.Root>
+                        <Card.Title
+                            >{profile.first_name}
+                            {profile.last_name}</Card.Title
+                        >
+                        <Card.Description>
+                            @{profile.username}
+                        </Card.Description>
+                        <Card.Content></Card.Content>
+                    </Card.Root>
+                {:else}
+                    <AuthCard {supabase} />
+                {/if}
+            </div>
         </div>
-        <Feed {feed} />
-        <div class="w-full max-w-[250px]">side panel</div>
     </div>
 </div>

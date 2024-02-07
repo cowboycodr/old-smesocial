@@ -11,8 +11,6 @@
 
     let { profile } = data;
     $: profile = data;
-
-    $: console.log(form);
 </script>
 
 <form use:enhance method="post" action="?/update">
