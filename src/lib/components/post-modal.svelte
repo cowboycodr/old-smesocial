@@ -21,22 +21,35 @@
             body: JSON.stringify({ content: value }),
         });
 
-        console.log(await response.json())
+        // dispatch("post");
 
-        dispatch("post");
+        close();
+    }
+
+    function close() {
+        dispatch("close");
+    }
+
+    function handleKeydown(event) {
+        if (event.key === "Escape") {
+            close();
+        }
     }
 </script>
 
-<div class="absolute w-full h-full bg-gray-500 bg-opacity-50">
+<div
+    class="absolute w-full h-full bg-gray-500 bg-opacity-50"
+    on:click|self={close}
+    on:keydown={handleKeydown}
+    role="button"
+    tabindex="0"
+>
     <div class="absolute-center w-full max-w-[500px] p-3">
         <Card.Root>
             <Card.Content>
-                <Card.Description class="text-black">Composing</Card.Description
-                >
                 <TextBox
                     class="p-0 border-none outline-none text-lg h-[100px] overflow-scroll"
                     placeholder="Let's get it started in here..."
-
                     bind:value
                 />
             </Card.Content>
@@ -46,7 +59,6 @@
                     class="flex items-center rounded-full justify-center w-min"
                     title="Post"
                     primary
-
                     on:click={post}
                 >
                     <ArrowRight size={18} />

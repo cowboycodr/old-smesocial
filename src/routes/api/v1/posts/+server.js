@@ -2,29 +2,49 @@ import { json } from '@sveltejs/kit';
 
 export const GET = async ({ params, locals: { supabase, getSession } }) => {
     const { count } = params;
-
     let posts;
     let error;
 
-    if (count) {
-        ({data: posts, error } = await supabase
-            .from('posts')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(count));
-    } else {
-        ({data: posts, error } = await supabase
-            .from('posts')
-            .select('*')
-            .order('created_at', { ascending: false }));
-    }
+    const selectString = `
+        id,
+        created_at,
+        content,
+        like_count,
+        users:user_id(id, username, first_name, last_name)  // Fetching related user data
+    `;
 
-    if (error) {
+    try {
+        if (count) {
+            ({ data: posts, error } = await supabase
+                .from('posts')
+                .select(selectString)
+                .order('created_at', { ascending: false })
+                .limit(count));
+        } else {
+            ({ data: posts, error } = await supabase
+                .from('posts')
+                .select(selectString)
+                .order('created_at', { ascending: false }));
+        }
+
+        if (error) throw error;
+
+        // Transform the data to remove 'user_id' and rename 'users' to 'author'
+        const transformedPosts = posts.map(post => {
+            const { users: author, ...rest } = post;
+            return {
+                ...rest,
+                author
+            };
+        });
+
+        return json({ posts: transformedPosts });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
         return json({ error: error.message }, 500);
     }
-
-    return json({ posts });
 }
+
 
 export const POST = async ({ request, locals: { supabase, getSession } }) => {
     const session = await getSession();
