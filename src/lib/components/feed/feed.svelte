@@ -5,6 +5,7 @@
 
     export let feed;
     export let profile;
+    export let session;
 
     // e.g "Good morning, John."
     function getDayTimeDescriptor() {
@@ -27,8 +28,6 @@
     if (profile) {
         welcomeString = welcomeString.replace(".", `, ${profile.first_name}.`)
     }
-
-    $: console.log(feed);
 </script>
 
 <div class="w-full h-full border-l border-r border-gray-100">
@@ -60,9 +59,11 @@
                             {postTimeDistance}
                         </div>
                         <div>
-                            <button on:click={() => { deletePost(post.id) }}>
-                                <Trash class="text-red-400" size={16} />
-                            </button>
+                            {#if session?.user_id === post.author.id}
+                                <button on:click={() => { deletePost(post.id) }}>
+                                    <Trash class="text-red-400" size={16} />
+                                </button>
+                            {/if}
                         </div>
                     </div>
                 </div>

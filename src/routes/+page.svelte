@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="col-span-3 w-full">
-                <Feed {feed} {profile} />
+                <Feed {feed} {profile} {session} />
             </div>
             <div class="w-full pt-1 col-span-1 max-w-[300px]">
                 {#if session}
