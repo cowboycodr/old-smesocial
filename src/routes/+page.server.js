@@ -1,5 +1,3 @@
-import { redirect } from '@sveltejs/kit';
-
 export const load = async ({ fetch }) => {
     const getFeed = async () => {
         const response = await fetch("/api/v1/posts");

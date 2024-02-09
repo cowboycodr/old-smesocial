@@ -21,8 +21,6 @@ export const DELETE = async ({ params, locals: { supabase, getSession } }) => {
 
     const session = await getSession();
 
-    console.log(`attempting to delete post ${id} by user ${session.user.id}`)
-
     if (!session) {
         return json({ error: 'Unauthorized' }, 401);
     }

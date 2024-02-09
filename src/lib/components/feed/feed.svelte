@@ -17,7 +17,9 @@
 
 {#each feed as post, idx}
     {@const postTimeDistance = moment(post.created_at).fromNow("LT")}
-    <div class="border-b border-gray-100">
+    <div
+        class:border-b={idx !== feed.length - 1}
+    >
         <div class="p-2">
             <div class="flex justify-between">
                 <div>
