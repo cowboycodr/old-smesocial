@@ -39,7 +39,6 @@ export const GET = async ({ params, locals: { supabase, getSession } }) => {
 
         return json(transformedPosts);
     } catch (error) {
-        console.error('Error fetching posts:', error);
         return json({ error: error.message }, 500);
     }
 }
@@ -65,11 +64,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
         .select()
         .single();
 
-    console.log(post);
-
     if (error) {
-        console.log(error);
-
         return json({ error: error.message }, 500);
     }
 

@@ -47,12 +47,7 @@
                     </div>
                 </div>
             </div>
-                {#each post.content.split("\n") as line, idx}
-                    {#if idx !== 0}
-                        <br />
-                    {/if}
-                    <p>{line}</p>
-                {/each}
+            <pre  class="font-sans">{post.content}</pre>
         </div>
         <div class="px-2">
             <!-- Interactive content goes here (e.g comments icon, like button, etc) -->
