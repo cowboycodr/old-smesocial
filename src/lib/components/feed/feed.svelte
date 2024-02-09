@@ -15,12 +15,9 @@
     }
 </script>
 
-
 {#each feed as post, idx}
     {@const postTimeDistance = moment(post.created_at).fromNow("LT")}
-    <div
-        class:border-b-0={idx !== feed.length - 1}
-    >
+    <div class="border-b border-gray-100">
         <div class="p-2">
             <div class="flex justify-between">
                 <div>
@@ -48,9 +45,12 @@
                     </div>
                 </div>
             </div>
-            <p>
-                {post.content}
-            </p>
+                {#each post.content.split("\n") as line, idx}
+                    {#if idx !== 0}
+                        <br />
+                    {/if}
+                    <p>{line}</p>
+                {/each}
         </div>
         <div class="px-2">
             <!-- Interactive content goes here (e.g comments icon, like button, etc) -->

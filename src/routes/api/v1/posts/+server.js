@@ -65,6 +65,8 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
         .select()
         .single();
 
+    console.log(post);
+
     if (error) {
         console.log(error);
 

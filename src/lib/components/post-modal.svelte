@@ -13,6 +13,8 @@
     let value;
 
     async function post() {
+        console.log(`Posting: "${value}"`);
+
         const response = await fetch("/api/v1/posts", {
             method: "POST",
             headers: {
