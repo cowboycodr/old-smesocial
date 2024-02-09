@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-export const load = async ({ fetch, locals: { supabase, getSession } }) => {
+export const load = async ({ fetch }) => {
     const getFeed = async () => {
         const response = await fetch("/api/v1/posts");
         const posts = await response.json();

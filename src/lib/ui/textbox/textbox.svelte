@@ -17,7 +17,7 @@
 <div
     contenteditable="true"
     class={twMerge("p-3 border border-gray-100 rounded-lg bg-white", className)}
-    bind:textContent={value}
+    bind:innerText={value}
 
     use:focus
 
@@ -29,6 +29,6 @@
         content: attr(placeholder);
         color: #a0aec0;
         pointer-events: none;
-        display: block; /* For Firefox */
+        display: block;
     }
 </style>
