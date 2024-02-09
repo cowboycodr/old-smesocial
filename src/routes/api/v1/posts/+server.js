@@ -29,7 +29,6 @@ export const GET = async ({ params, locals: { supabase, getSession } }) => {
 
         if (error) throw error;
 
-        // Transform the data to remove 'user_id' and rename 'users' to 'author'
         const transformedPosts = posts.map(post => {
             const { users: author, ...rest } = post;
             return {
@@ -38,7 +37,7 @@ export const GET = async ({ params, locals: { supabase, getSession } }) => {
             };
         });
 
-        return json({ posts: transformedPosts });
+        return json(transformedPosts);
     } catch (error) {
         console.error('Error fetching posts:', error);
         return json({ error: error.message }, 500);
@@ -63,6 +62,7 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
     const { data: post, error } = await supabase
         .from('posts')
         .insert({ content, user_id: session.user.id })
+        .select()
         .single();
 
     if (error) {
@@ -71,5 +71,5 @@ export const POST = async ({ request, locals: { supabase, getSession } }) => {
         return json({ error: error.message }, 500);
     }
 
-    return json({ "message": "Successfully posted", post })
+    return json({ "message": "Post uploaded successfully.", post })
 }

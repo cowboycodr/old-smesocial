@@ -19,7 +19,7 @@ export const load = async ({ fetch, locals: { supabase, getSession } }) => {
 
     const getFeed = async () => {
         const response = await fetch("/api/v1/posts");
-        const { posts } = await response.json();
+        const posts = await response.json();
 
         return posts;
     }

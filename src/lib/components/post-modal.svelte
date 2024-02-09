@@ -21,13 +21,14 @@
             body: JSON.stringify({ content: value }),
         });
 
-        // dispatch("post");
+        const data = await response.json();
+        const post = data.post;
 
-        close();
-    }
+        if (!response.ok) {
+            dispatch("error", { message: "Failed to post." });
+        }
 
-    function close() {
-        dispatch("close");
+        dispatch("post", { post });
     }
 
     function handleKeydown(event) {
@@ -39,7 +40,7 @@
 
 <div
     class="absolute w-full h-full bg-gray-500 bg-opacity-50"
-    on:click|self={close}
+    on:click|self={() => { dispatch("close"); }}
     on:keydown={handleKeydown}
     role="button"
     tabindex="0"
@@ -51,6 +52,8 @@
                     class="p-0 border-none outline-none text-lg h-[100px] overflow-scroll"
                     placeholder="Let's get it started in here..."
                     bind:value
+
+                    autofocus
                 />
             </Card.Content>
             <Separator class="mt-3 mb-3" />
